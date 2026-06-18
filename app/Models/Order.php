@@ -36,4 +36,15 @@ class Order extends Model
     {
         return $this->hasMany(Payment::class);
     }
+
+    protected static function booted(): void
+    {
+        static::creating(function ($order) {
+
+            $lastId = static::max('id') + 1;
+
+            $order->order_number =
+                'ORD-'.now()->format('Ymd').'-'.str_pad($lastId, 4, '0', STR_PAD_LEFT);
+        });
+    }
 }

@@ -31,4 +31,40 @@ class Booking extends Model
     {
         return $this->hasMany(Order::class);
     }
+
+    protected static function booted(): void
+    {
+        static::creating(function ($booking) {
+
+            $exists = static::where('table_id', $booking->table_id)
+                ->whereNotIn('status', [
+                    'completed',
+                    'cancelled',
+                ])
+                ->exists();
+
+            if ($exists) {
+                throw new \Exception('Meja sudah dibooking.');
+            }
+        });
+
+        static::saving(function ($booking) {
+
+            if (in_array($booking->status, [
+                'completed',
+                'cancelled',
+            ])) {
+
+                $booking->table()->update([
+                    'status' => 'available',
+                ]);
+
+                return;
+            }
+
+            $booking->table()->update([
+                'status' => 'occupied',
+            ]);
+        });
+    }
 }
