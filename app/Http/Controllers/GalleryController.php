@@ -10,10 +10,10 @@ class GalleryController extends Controller
     {
         // Placeholder: replace with dynamic images later
         $images = [
-            '/images/gallery/1.jpg',
-            '/images/gallery/2.jpg',
-            '/images/gallery/3.jpg',
-            '/images/gallery/4.jpg',
+            '/images/gallery/1.png',
+            '/images/gallery/2.png',
+            '/images/gallery/3.png',
+            '/images/gallery/4.png',
         ];
 
         return view('gallery.index', compact('images'));

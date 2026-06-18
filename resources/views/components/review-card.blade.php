@@ -1,4 +1,4 @@
-﻿<article role="article" aria-label="Review by {{ $review->name }}" class="bg-white p-4 rounded shadow focus-within:ring-2 focus-within:ring-orange-400">
+<article role="article" aria-label="Review by {{ $review->name }}" class="card p-4">
   <div class="flex items-start">
     <div class="mr-3">
       <div class="w-10 h-10 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center font-semibold">{{ strtoupper(substr($review->name,0,1)) }}</div>
