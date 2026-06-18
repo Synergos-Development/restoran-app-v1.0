@@ -19,10 +19,26 @@ class Payment extends Model
 
     protected $casts = [
         'paid_at' => 'datetime',
+        'amount' => 'decimal:2',
     ];
 
     public function order()
     {
         return $this->belongsTo(Order::class);
+    }
+
+    protected static function booted(): void
+    {
+        static::updated(function (Payment $payment): void {
+            if ($payment->wasChanged('status') && $payment->status === 'paid') {
+                $payment->order()->update(['status' => 'completed']);
+            }
+        });
+
+        static::created(function (Payment $payment): void {
+            if ($payment->status === 'paid') {
+                $payment->order()->update(['status' => 'completed']);
+            }
+        });
     }
 }
