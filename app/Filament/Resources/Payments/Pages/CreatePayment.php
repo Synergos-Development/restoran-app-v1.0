@@ -8,4 +8,11 @@ use Filament\Resources\Pages\CreateRecord;
 class CreatePayment extends CreateRecord
 {
     protected static string $resource = PaymentResource::class;
+
+    protected static ?string $title = 'Proses Pembayaran';
+
+    protected function getCreateFormActionLabel(): string
+    {
+        return 'Simpan Pembayaran';
+    }
 }

@@ -17,6 +17,10 @@ class Order extends Model
         'total_price',
     ];
 
+    protected $casts = [
+        'total_price' => 'decimal:2',
+    ];
+
     public function table()
     {
         return $this->belongsTo(RestaurantTable::class);
@@ -39,12 +43,11 @@ class Order extends Model
 
     protected static function booted(): void
     {
-        static::creating(function ($order) {
-
-            $lastId = static::max('id') + 1;
+        static::creating(function (Order $order): void {
+            $lastId = (static::max('id') ?? 0) + 1;
 
             $order->order_number =
-                'ORD-'.now()->format('Ymd').'-'.str_pad($lastId, 4, '0', STR_PAD_LEFT);
+                'ORD-'.now()->format('Ymd').'-'.str_pad((string) $lastId, 4, '0', STR_PAD_LEFT);
         });
     }
 }

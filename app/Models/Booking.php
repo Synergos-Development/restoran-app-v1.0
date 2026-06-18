@@ -34,13 +34,10 @@ class Booking extends Model
 
     protected static function booted(): void
     {
-        static::creating(function ($booking) {
-
-            $exists = static::where('table_id', $booking->table_id)
-                ->whereNotIn('status', [
-                    'completed',
-                    'cancelled',
-                ])
+        static::creating(function (Booking $booking): void {
+            $exists = static::query()
+                ->where('table_id', $booking->table_id)
+                ->whereNotIn('status', ['completed', 'cancelled'])
                 ->exists();
 
             if ($exists) {
@@ -48,23 +45,22 @@ class Booking extends Model
             }
         });
 
-        static::saving(function ($booking) {
+        static::created(function (Booking $booking): void {
+            $booking->table()->update(['status' => 'occupied']);
+        });
 
-            if (in_array($booking->status, [
-                'completed',
-                'cancelled',
-            ])) {
+        static::updated(function (Booking $booking): void {
+            if (! $booking->wasChanged('status')) {
+                return;
+            }
 
-                $booking->table()->update([
-                    'status' => 'available',
-                ]);
+            if (in_array($booking->status, ['completed', 'cancelled'], true)) {
+                $booking->table()->update(['status' => 'available']);
 
                 return;
             }
 
-            $booking->table()->update([
-                'status' => 'occupied',
-            ]);
+            $booking->table()->update(['status' => 'occupied']);
         });
     }
 }

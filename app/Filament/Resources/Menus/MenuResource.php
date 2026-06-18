@@ -55,6 +55,26 @@ class MenuResource extends Resource
 
     public static function canViewAny(): bool
     {
-        return auth()->user()?->hasRole('Admin') ?? false;
+        return auth()->user()?->can('view_menus') ?? false;
+    }
+
+    public static function canCreate(): bool
+    {
+        return auth()->user()?->can('manage_menus') ?? false;
+    }
+
+    public static function canEdit($record): bool
+    {
+        return auth()->user()?->can('manage_menus') ?? false;
+    }
+
+    public static function canDelete($record): bool
+    {
+        return auth()->user()?->can('manage_menus') ?? false;
+    }
+
+    public static function canDeleteAny(): bool
+    {
+        return auth()->user()?->can('manage_menus') ?? false;
     }
 }

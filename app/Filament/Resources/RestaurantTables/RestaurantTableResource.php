@@ -19,9 +19,11 @@ class RestaurantTableResource extends Resource
 {
     protected static ?string $model = RestaurantTable::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTableCells;
 
     protected static ?string $recordTitleAttribute = 'table_number';
+
+    protected static ?string $navigationLabel = 'Meja';
 
     protected static string|UnitEnum|null $navigationGroup = 'Master Data';
 
@@ -39,9 +41,7 @@ class RestaurantTableResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array
@@ -55,29 +55,26 @@ class RestaurantTableResource extends Resource
 
     public static function canViewAny(): bool
     {
-        return auth()->user()->hasRole('Admin')
-        || auth()->user()->hasRole('Kasir');
+        return auth()->user()?->can('view_tables') ?? false;
     }
 
     public static function canCreate(): bool
     {
-        return auth()->user()?->hasRole('Admin');
+        return auth()->user()?->can('manage_tables') ?? false;
     }
 
     public static function canEdit($record): bool
     {
-        return auth()->user()?->hasRole('Admin');
+        return auth()->user()?->can('manage_tables') ?? false;
     }
 
     public static function canDelete($record): bool
     {
-        return auth()->user()?->hasRole('Admin');
+        return auth()->user()?->can('manage_tables') ?? false;
     }
 
     public static function canDeleteAny(): bool
     {
-        return auth()->user()?->hasRole('Admin');
+        return auth()->user()?->can('manage_tables') ?? false;
     }
-
-    
 }

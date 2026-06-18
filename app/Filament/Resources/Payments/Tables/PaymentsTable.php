@@ -18,6 +18,14 @@ class PaymentsTable
                     ->label('Nomor Order')
                     ->searchable()
                     ->sortable(),
+
+                TextColumn::make('order.table.table_number')
+                    ->label('Meja')
+                    ->placeholder('-'),
+
+                TextColumn::make('order.booking.customer_name')
+                    ->label('Customer')
+                    ->placeholder('-'),
                 TextColumn::make('payment_method')
                     ->label('Metode')
                     ->badge(),
