@@ -14,7 +14,7 @@ class ListRestaurantTables extends ListRecords
     {
         return [
             CreateAction::make()
-            ->visible(fn () => auth()->user()?->hasRole('Admin')),
+                ->visible(fn () => auth()->user()?->can('manage_tables') ?? false),
         ];
     }
 }

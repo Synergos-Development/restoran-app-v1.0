@@ -49,6 +49,8 @@ class RolePermissionSeeder extends Seeder
         $admin->syncPermissions($permissions);
 
         $kasir->syncPermissions([
+            'view_tables',
+
             'view_bookings',
             'manage_bookings',
 
