@@ -44,9 +44,9 @@ class MenuForm
                     ->disk('public') // save uploads to storage/app/public so they're web-accessible via /storage
                     ->directory('menus')
                     ->imageEditor()
-                    ->maxSize(2048) // 2048 KB = 2MB
+                    ->maxSize(10000) // 2048 KB = 2MB
                     ->imagePreviewHeight(200),
-
+    
                 Toggle::make('is_available')
                     ->label('Tersedia')
                     ->default(true),

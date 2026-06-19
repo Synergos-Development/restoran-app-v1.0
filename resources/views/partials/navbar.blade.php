@@ -20,7 +20,10 @@
           <form method="POST" action="{{ route('logout') }}" class="inline">@csrf<button class="text-sm text-gray-700 hover:text-orange-600">Logout</button></form>
         @endguest
 
-        <a href="{{ route('booking.create') }}" class="ml-3 inline-flex items-center bg-orange-500 text-white px-4 py-2 rounded-md text-sm shadow">Reservation</a>
+        <a href="{{ auth()->check() ? route('booking.create') : route('login') }}"
+   class="ml-3 inline-flex items-center bg-orange-500 text-white px-4 py-2 rounded-md text-sm shadow">
+    Reservation
+</a>
 
         <!-- Mobile menu button -->
         <div class="md:hidden">

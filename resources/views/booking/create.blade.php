@@ -35,7 +35,7 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label class="block text-sm text-gray-700">Nama</label>
-              <input type="text" name="customer_name" class="border rounded w-full px-3 py-2" required>
+              <input type="text" value="{{ auth()->user()->name }}" readonly class="border rounded w-full px-3 py-2 bg-gray-100">
             </div>
 
             <div>
